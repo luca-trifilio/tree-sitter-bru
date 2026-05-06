@@ -1,0 +1,98 @@
+==================
+meta + get
+==================
+
+meta {
+  name: Get Users
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://api.example.com/users
+  auth: none
+}
+
+---
+
+(source_file
+  (dictionary_block
+    name: (block_name)
+    (entry key: (key) value: (value))
+    (entry key: (key) value: (value))
+    (entry key: (key) value: (value)))
+  (dictionary_block
+    name: (block_name)
+    (entry key: (key) value: (value))
+    (entry key: (key) value: (value))))
+
+==================
+headers with disabled entry
+==================
+
+headers {
+  Content-Type: application/json
+  ~X-Debug: 1
+}
+
+---
+
+(source_file
+  (dictionary_block
+    name: (block_name)
+    (entry key: (key) value: (value))
+    (entry
+      (disabled_marker)
+      key: (key)
+      value: (value))))
+
+==================
+body:json injection target
+==================
+
+body:json {
+  {
+    "hello": "world"
+  }
+}
+
+---
+
+(source_file
+  (text_block
+    name: (block_name)
+    content: (text_content)))
+
+==================
+script:pre-request
+==================
+
+script:pre-request {
+  bru.setVar("token", "abc");
+}
+
+---
+
+(source_file
+  (text_block
+    name: (block_name)
+    content: (text_content)))
+
+==================
+comments
+==================
+
+// top-level comment
+meta {
+  // inside a block
+  name: X
+}
+
+---
+
+(source_file
+  (comment)
+  (dictionary_block
+    name: (block_name)
+    (comment)
+    (entry key: (key) value: (value))))

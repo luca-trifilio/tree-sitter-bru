@@ -1,0 +1,42 @@
+{
+  "name": "tree-sitter-bru",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for Bruno (.bru) request files",
+  "main": "bindings/node",
+  "keywords": [
+    "tree-sitter",
+    "parser",
+    "bruno",
+    "bru",
+    "neovim"
+  ],
+  "author": "Luca Trifilio",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luca-trifilio/tree-sitter-bru.git"
+  },
+  "bugs": {
+    "url": "https://github.com/luca-trifilio/tree-sitter-bru/issues"
+  },
+  "homepage": "https://github.com/luca-trifilio/tree-sitter-bru#readme",
+  "dependencies": {
+    "node-addon-api": "^7.1.0",
+    "node-gyp-build": "^4.8.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.22.6"
+  },
+  "scripts": {
+    "build": "tree-sitter generate",
+    "parse": "tree-sitter parse",
+    "test": "tree-sitter test"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.bru",
+      "file-types": ["bru"],
+      "injection-regex": "^bru$"
+    }
+  ]
+}
