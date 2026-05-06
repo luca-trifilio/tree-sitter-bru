@@ -16,15 +16,15 @@ get {
 ---
 
 (source_file
-  (dictionary_block
-    name: (block_name)
-    (entry key: (key) value: (value))
-    (entry key: (key) value: (value))
-    (entry key: (key) value: (value)))
-  (dictionary_block
-    name: (block_name)
-    (entry key: (key) value: (value))
-    (entry key: (key) value: (value))))
+  (meta (keyword)
+    (dictionary
+      (pair key: (key) value: (value))
+      (pair key: (key) value: (value))
+      (pair key: (key) value: (value))))
+  (http (keyword)
+    (dictionary
+      (pair key: (key) value: (value))
+      (pair key: (key) value: (value)))))
 
 ==================
 headers with disabled entry
@@ -38,13 +38,13 @@ headers {
 ---
 
 (source_file
-  (dictionary_block
-    name: (block_name)
-    (entry key: (key) value: (value))
-    (entry
-      (disabled_marker)
-      key: (key)
-      value: (value))))
+  (headers (keyword)
+    (dictionary
+      (pair key: (key) value: (value))
+      (pair
+        disabled: (disabled_marker)
+        key: (key)
+        value: (value)))))
 
 ==================
 body:json injection target
@@ -59,9 +59,12 @@ body:json {
 ---
 
 (source_file
-  (text_block
-    name: (block_name)
-    content: (text_content)))
+  (body_json (keyword)
+    (text_block
+      (text_content
+        (text_chunk)
+        (nested_braces (text_chunk))
+        (text_chunk)))))
 
 ==================
 script:pre-request
@@ -74,9 +77,9 @@ script:pre-request {
 ---
 
 (source_file
-  (text_block
-    name: (block_name)
-    content: (text_content)))
+  (script_pre_request (keyword)
+    (text_block
+      (text_content (text_chunk)))))
 
 ==================
 comments
@@ -92,7 +95,180 @@ meta {
 
 (source_file
   (comment)
-  (dictionary_block
-    name: (block_name)
-    (comment)
-    (entry key: (key) value: (value))))
+  (meta (keyword)
+    (dictionary
+      (comment)
+      (pair key: (key) value: (value)))))
+
+==================
+auth:awsv4 with empty value
+==================
+
+auth:awsv4 {
+  accessKeyId: {{AWS_ACCESS_KEY}}
+  profileName:
+}
+
+---
+
+(source_file
+  (auth_awsv4 (keyword)
+    (dictionary
+      (pair key: (key) value: (value))
+      (pair key: (key)))))
+
+==================
+vars:pre-request with empty value
+==================
+
+vars:pre-request {
+  shop_id: f596d8cf-5c50-4a12-b7f0-ae5b346f0958
+  shop_fund_lock_uid:
+}
+
+---
+
+(source_file
+  (vars_pre_request (keyword)
+    (dictionary
+      (pair key: (key) value: (value))
+      (pair key: (key)))))
+
+==================
+params:query with disabled entries
+==================
+
+params:query {
+  group_uid: {{parent_payment_uid}}
+  ~starting_after:
+  ~limit: 20
+}
+
+---
+
+(source_file
+  (params_query (keyword)
+    (dictionary
+      (pair key: (key) value: (value))
+      (pair disabled: (disabled_marker) key: (key))
+      (pair disabled: (disabled_marker) key: (key) value: (value)))))
+
+==================
+script with deeply nested braces
+==================
+
+script:pre-request {
+  if (x) {
+    if (y) {
+      bru.setVar("a", 1);
+    }
+  }
+}
+
+---
+
+(source_file
+  (script_pre_request (keyword)
+    (text_block
+      (text_content
+        (text_chunk)
+        (nested_braces
+          (text_chunk)
+          (nested_braces (text_chunk))
+          (text_chunk))
+        (text_chunk)))))
+
+==================
+tests block
+==================
+
+tests {
+  test("Status code is 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+}
+
+---
+
+(source_file
+  (tests (keyword)
+    (text_block
+      (text_content
+        (text_chunk)
+        (nested_braces (text_chunk))
+        (text_chunk)))))
+
+==================
+settings block
+==================
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+---
+
+(source_file
+  (settings (keyword)
+    (dictionary
+      (pair key: (key) value: (value))
+      (pair key: (key) value: (value)))))
+
+==================
+params:path block
+==================
+
+params:path {
+  configuration_key: {{configuration_key}}
+}
+
+---
+
+(source_file
+  (params_path (keyword)
+    (dictionary
+      (pair key: (key) value: (value)))))
+
+==================
+standalone vars block (environment file)
+==================
+
+vars {
+  transaction_url: http://localhost:9310
+  consumer_a_id: 7da90767-f31c-43a5-8bdf-a840a06972c0
+  uuid:
+}
+
+---
+
+(source_file
+  (vars (keyword)
+    (dictionary
+      (pair key: (key) value: (value))
+      (pair key: (key) value: (value))
+      (pair key: (key)))))
+
+==================
+folder.bru  —  meta + auth only
+==================
+
+meta {
+  name: configurations
+  seq: 4
+}
+
+auth {
+  mode: inherit
+}
+
+---
+
+(source_file
+  (meta (keyword)
+    (dictionary
+      (pair key: (key) value: (value))
+      (pair key: (key) value: (value))))
+  (auth (keyword)
+    (dictionary
+      (pair key: (key) value: (value)))))

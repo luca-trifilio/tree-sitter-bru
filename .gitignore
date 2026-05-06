@@ -4,6 +4,7 @@ prebuilds/
 *.log
 
 # Generated parser artifacts — regenerate with `tree-sitter generate`
+# src/scanner.c is hand-written and IS tracked.
 src/parser.c
 src/tree_sitter/
 src/grammar.json

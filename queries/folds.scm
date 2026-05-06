@@ -1,2 +1,2 @@
-(dictionary_block) @fold
+(dictionary) @fold
 (text_block) @fold
