@@ -82,7 +82,6 @@ module.exports = grammar({
       field('key', $.key),
       ':',
       optional(field('value', $.value)),
-      /\r?\n|$/,
     ),
 
     key: _ => token(prec(1, /[A-Za-z_][A-Za-z0-9_\-\.\$]*/)),

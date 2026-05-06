@@ -3,12 +3,21 @@
   "version": "0.1.0",
   "description": "Tree-sitter grammar for Bruno (.bru) request files",
   "main": "bindings/node",
+  "types": "bindings/node",
   "keywords": [
     "tree-sitter",
     "parser",
     "bruno",
     "bru",
     "neovim"
+  ],
+  "files": [
+    "grammar.js",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**"
   ],
   "author": "Luca Trifilio",
   "license": "MIT",
@@ -24,18 +33,31 @@
     "node-addon-api": "^7.1.0",
     "node-gyp-build": "^4.8.0"
   },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.0"
+  },
+  "peerDependenciesMeta": {
+    "tree_sitter": {
+      "optional": true
+    }
+  },
   "devDependencies": {
-    "tree-sitter-cli": "^0.22.6"
+    "tree-sitter-cli": "^0.22.6",
+    "prebuildify": "^6.0.0"
   },
   "scripts": {
     "build": "tree-sitter generate",
     "parse": "tree-sitter parse",
-    "test": "tree-sitter test"
+    "test": "tree-sitter test",
+    "install": "node-gyp-build",
+    "prebuildify": "prebuildify --napi --strip"
   },
   "tree-sitter": [
     {
       "scope": "source.bru",
-      "file-types": ["bru"],
+      "file-types": [
+        "bru"
+      ],
       "injection-regex": "^bru$"
     }
   ]
