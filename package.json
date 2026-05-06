@@ -46,7 +46,7 @@
     "prebuildify": "^6.0.0"
   },
   "scripts": {
-    "build": "tree-sitter generate",
+    "build": "tree-sitter generate && tree-sitter build --output bru.so .",
     "parse": "tree-sitter parse",
     "test": "tree-sitter test",
     "install": "node-gyp-build",
